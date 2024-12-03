@@ -1,4 +1,5 @@
 ﻿
+using static Domain.Enums.ProductEnums;
 
 namespace Domain.Entities
 {
@@ -8,6 +9,9 @@ namespace Domain.Entities
 
         public string? UserEmail { get; set; }
 
+        public string? PasswordHash { get; set; }
+
+        public AccountType AccountType { get; set; }
         public ICollection<Product>? ProductsByUser { get; set; }
     }
 }
