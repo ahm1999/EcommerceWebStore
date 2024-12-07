@@ -14,6 +14,8 @@ namespace Application.ServiceInterfaces
         Task<ServiceResponse<Product>> FindProductByNameAsync(string ProductName);
         Task<ServiceResponse<Product>> DeleteProductAsync(Guid Product);
 
+        Task<ServiceResponse<Product>> GetAlProducts();
+
         
 
     }

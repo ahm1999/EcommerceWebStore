@@ -4,4 +4,27 @@
 @{
 }
 
+
+@using Application.Dtos.ProductDtos
+
+@model CreateProductDto
 <h3>Adding Products Form</h3>
+
+
+<form asp-controller="Product" asp-action="AddProduct">
+
+   
+    <label asp-for="ProductName"></label>
+    <input asp-for="ProductName"/>
+    <span asp-validation-for="ProductName" class="text-danger"></span>
+
+    <label asp-for="ProductDescription"></label>
+    <input asp-for="ProductDescription"/>
+    <span asp-validation-for="ProductDescription" class="text-danger"></span>
+
+    <button type="submit">Add Product </button>
+</form>
+
+<script src="/lib/jquery/dist/jquery.js"></script>
+<script src="/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>

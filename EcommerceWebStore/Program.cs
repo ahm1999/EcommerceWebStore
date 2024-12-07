@@ -1,5 +1,6 @@
 using Infrastructure;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -9,6 +10,8 @@ builder.Services.RegisterAuth();
 
 
 builder.Services.AddControllersWithViews();
+
+
 
 
 var app = builder.Build();

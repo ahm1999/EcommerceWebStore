@@ -1,4 +1,5 @@
-﻿using Application.ServiceInterfaces;
+﻿using Application.Dtos.ProductDtos;
+using Application.ServiceInterfaces;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,47 +12,28 @@ namespace EcommerceWebStore.Controllers
         {
             _productService = productService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Product> products = new() {
-
-            new Product() {
-                Id = Guid.NewGuid(),
-                AddedBy = Guid.NewGuid(),
-                CreatedAt = DateTime.UtcNow,
-                ProductDescription = "THis is product desctiption",
-                ProductName = "Product 1"
-
-
-                }
-            ,new Product() {
-                Id = Guid.NewGuid(),
-                AddedBy = Guid.NewGuid(),
-                CreatedAt = DateTime.UtcNow,
-                ProductDescription = "THis is product desctiption",
-                ProductName = "Product 2"
-
-
-            },
-            new Product() {
-                Id = Guid.NewGuid(),
-                AddedBy = Guid.NewGuid(),
-                CreatedAt = DateTime.UtcNow,
-                ProductDescription = "THis is product desctiption",
-                ProductName = "Product 3"
-
-
-                }
-
-
-
-            };
-            return View(products);
+            var response = await _productService.GetAlProducts();
+            return View(response.values);
         }
 
         public IActionResult AddProduct() { 
         
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddProduct([FromForm] CreateProductDto productDto)
+        {
+
+            if (!ModelState.IsValid) {
+               return RedirectToAction("AddProduct",new {ErrorMessage = "Invalid Inputs"});
+            }
+
+            await _productService.CreateProductAsync(productDto,Guid.NewGuid());
+
+            return RedirectToAction("Index",new { Message = "Product created Succesfully"});
         }
     }
 }

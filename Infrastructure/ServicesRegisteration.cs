@@ -18,6 +18,7 @@ namespace Infrastructure
 
         public static void RegisterAuth(this IServiceCollection services) {
             services.AddHttpContextAccessor();
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
              .AddCookie();
         }

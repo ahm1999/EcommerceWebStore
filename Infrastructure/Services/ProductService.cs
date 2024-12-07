@@ -88,6 +88,13 @@ namespace Infrastructure.Services
             return new ServiceResponse<Product>(true, "Products Found Succesfully", products);
         }
 
+        public async Task<ServiceResponse<Product>> GetAlProducts()
+        {
+            List<Product> products = await _context.Products.ToListAsync();
+
+            return new ServiceResponse<Product>(true, "Succesful Operation", products);
+        }
+
         public async Task<ServiceResponse<Product>> UpdateProductAsync(UpdateProductDto productDto)
         {
             Product? product = await _context.Products.FirstOrDefaultAsync(p => p.Id == productDto.ProductId);
