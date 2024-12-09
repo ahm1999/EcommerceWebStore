@@ -8,6 +8,7 @@ namespace EcommerceWebStore.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
+       
         public ProductController(IProductService productService)
         {
             _productService = productService;
@@ -28,7 +29,8 @@ namespace EcommerceWebStore.Controllers
         {
 
             if (!ModelState.IsValid) {
-               return RedirectToAction("AddProduct",new {ErrorMessage = "Invalid Inputs"});
+            
+                return RedirectToAction("AddProduct",new {ErrorMessage = "Invalid Inputs"});
             }
 
             await _productService.CreateProductAsync(productDto,Guid.NewGuid());

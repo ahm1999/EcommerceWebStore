@@ -11,7 +11,7 @@
 <h3>Adding Products Form</h3>
 
 
-<form asp-controller="Product" asp-action="AddProduct">
+<form enctype="multipart/form-data" asp-controller="Product" asp-action="AddProduct">
 
    
     <label asp-for="ProductName"></label>
@@ -21,7 +21,9 @@
     <label asp-for="ProductDescription"></label>
     <input asp-for="ProductDescription"/>
     <span asp-validation-for="ProductDescription" class="text-danger"></span>
+    
 
+    <input asp-for="Images" type="file" accept="image/png, image/jpeg" multiple />
     <button type="submit">Add Product </button>
 </form>
 

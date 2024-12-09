@@ -10,17 +10,21 @@ namespace Infrastructure.Services
     public class ProductService : IProductService
     {
         private readonly AppDbContext _context;
-        public ProductService(AppDbContext context)
+        private readonly IFileStorageService _storageService;
+        public ProductService(AppDbContext context, IFileStorageService storageService)
         {
             _context = context;
+            _storageService = storageService;
         }
-        
+
         public async Task<ServiceResponse<Product>> CreateProductAsync(CreateProductDto productDto,Guid UserId)
         {
             try {
+                var ProductId = Guid.NewGuid();
+
                 Product newProduct = new Product()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = ProductId,
                     AddedBy = UserId,
                     CreatedAt = DateTime.UtcNow,
                     ProductDescription = productDto.ProductDescription,
@@ -29,6 +33,8 @@ namespace Infrastructure.Services
                 };
 
                 await _context.Products.AddAsync(newProduct);
+
+                await _storageService.SaveImagesAsync(productDto.Images,ProductId);
 
                 await _context.SaveChangesAsync();
 

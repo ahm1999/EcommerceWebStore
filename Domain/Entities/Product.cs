@@ -10,5 +10,7 @@ namespace Domain.Entities
 
         [ForeignKey(nameof(User))]
         public Guid AddedBy { get; set; }
+
+        public ICollection<ProductImage>? ProductImages { get; set; }
     }
 }

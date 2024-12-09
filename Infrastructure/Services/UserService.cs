@@ -32,6 +32,17 @@ namespace Infrastructure.Services
         public Task<ServiceResponse<User>> SignUpAsync(CreateUserDTO createUserDTO)
         {
             throw new NotImplementedException();
+            User user = new()
+            {
+                Id = Guid.NewGuid(),
+                UserName = createUserDTO.UserName,
+                UserEmail = createUserDTO.UserEmail,
+                CreatedAt = DateTime.UtcNow,
+                AccountType = createUserDTO.AccountType
+                
+
+            };
+            
         }
     }
 }

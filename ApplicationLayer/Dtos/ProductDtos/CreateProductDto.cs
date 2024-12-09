@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dtos.ProductDtos
@@ -15,6 +16,10 @@ namespace Application.Dtos.ProductDtos
         [StringLength(100)]
 
         public string? ProductDescription { get; set; }
+
+        [Required]
+        
+        public ICollection<IFormFile>? Images { get; set; }
        // public Guid AddedBy { get; set; }
     }
 }

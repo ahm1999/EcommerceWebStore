@@ -13,6 +13,7 @@ namespace Infrastructure
 
         public static void RegisterEntitiesServices(this IServiceCollection services) {
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IFileStorageService, SaveToDeskFileStorage>();
             
         }
 
