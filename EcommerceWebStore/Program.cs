@@ -7,11 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.DbConnection(builder.Configuration);
 builder.Services.RegisterEntitiesServices();
 builder.Services.RegisterAuth();
+builder.Services.RegisterUtilServices();
 
 
 builder.Services.AddControllersWithViews();
-
-
 
 
 var app = builder.Build();

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Identity.Client;
 
 
 namespace Infrastructure
@@ -14,7 +15,13 @@ namespace Infrastructure
         public static void RegisterEntitiesServices(this IServiceCollection services) {
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IFileStorageService, SaveToDeskFileStorage>();
+            services.AddScoped<IUserService, UserService>();
             
+        }
+
+        public static void RegisterUtilServices(this IServiceCollection services) {
+            services.AddTransient<IPasswordHasher, PasswordHasher>();
+        
         }
 
         public static void RegisterAuth(this IServiceCollection services) {

@@ -29,8 +29,8 @@ namespace EcommerceWebStore.Controllers
         {
 
             if (!ModelState.IsValid) {
-            
-                return RedirectToAction("AddProduct",new {ErrorMessage = "Invalid Inputs"});
+                TempData["Message"] = "Invalid Inputs";
+                return RedirectToAction("AddProduct");
             }
 
             await _productService.CreateProductAsync(productDto,Guid.NewGuid());

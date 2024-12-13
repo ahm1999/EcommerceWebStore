@@ -10,7 +10,12 @@
 @model CreateProductDto
 <h3>Adding Products Form</h3>
 
-
+@if (TempData["Message"] != null)
+{
+        <div class="alert alert-warning">
+        @TempData["Message"]
+        </div>
+}
 <form enctype="multipart/form-data" asp-controller="Product" asp-action="AddProduct">
 
    

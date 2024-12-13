@@ -15,6 +15,10 @@ namespace Application.Dtos.UserDtos
         [EmailAddress]
         public string? UserEmail { get; set; }
 
+        [Required]
+        [MinLength(8)]
+        [StringLength(20)]
+        public string? Password { get; set; }
         public AccountType AccountType { get; set; } = AccountType.ClientAccount;
 
     }

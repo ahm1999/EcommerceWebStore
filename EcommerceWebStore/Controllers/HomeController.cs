@@ -1,3 +1,4 @@
+using Domain.Entities;
 using EcommerceWebStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -15,7 +16,7 @@ namespace EcommerceWebStore.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToActionPermanent("Index", "Product");
         }
 
         public IActionResult Privacy()

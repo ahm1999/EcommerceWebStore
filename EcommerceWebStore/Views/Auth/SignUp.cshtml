@@ -1,0 +1,46 @@
+﻿@using static Domain.Enums.ProductEnums
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Application.Dtos.UserDtos.CreateUserDTO
+
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-warning">
+        @TempData["Message"]
+    </div>
+}
+
+<form method="post" asp-controller="Auth" asp-action="SignUpPost" >
+
+    <label asp-for="UserName" ></label>
+    <input asp-for="UserName" />
+    <span asp-validation-for="UserName" class="text-danger"></span>
+
+
+
+    <label asp-for="UserEmail"></label>
+    <input asp-for="UserEmail" type="email" />
+    <span asp-validation-for="UserEmail" class="text-danger"></span>
+
+    
+    <label asp-for="Password" ></label>
+    <input asp-for="Password" type="password" />
+    <span asp-validation-for="Password" class="text-danger"></span>
+
+
+    <label asp-for="AccountType" ></label>
+    <select  asp-for="AccountType" asp-items="Html.GetEnumSelectList<AccountType>()">
+        <option value="">select an Account Type</option>
+    </select>
+
+    <button type="submit">Submit</button>
+</form>
+
+<script src="/lib/jquery/dist/jquery.js"></script>
+<script src="/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
