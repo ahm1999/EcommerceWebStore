@@ -1,5 +1,6 @@
 ﻿using Application.Dtos.UserDtos;
 using Application.ServiceInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceWebStore.Controllers
@@ -15,17 +16,38 @@ namespace EcommerceWebStore.Controllers
         }
 
         public IActionResult LogIn() {
-            
+
+            if (_userService.IsLoggedIn())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
         public IActionResult SignUp() {
-
+            if (_userService.IsLoggedIn())
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
+        [Authorize]
+        public async Task<IActionResult> LogOut()
+        {
+            await _userService.SignOutAsync();
+            return RedirectToAction("Index","Home");
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> SignUpPost([FromForm]CreateUserDTO createUserDto) {
+
+            if (_userService.IsLoggedIn())
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             _logger.LogInformation("1");
             if (!ModelState.IsValid)

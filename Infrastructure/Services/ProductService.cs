@@ -11,6 +11,7 @@ namespace Infrastructure.Services
     {
         private readonly AppDbContext _context;
         private readonly IFileStorageService _storageService;
+
         public ProductService(AppDbContext context, IFileStorageService storageService)
         {
             _context = context;
@@ -25,7 +26,7 @@ namespace Infrastructure.Services
                 Product newProduct = new Product()
                 {
                     Id = ProductId,
-                    AddedBy = UserId,
+                    UserId= UserId,
                     CreatedAt = DateTime.UtcNow,
                     ProductDescription = productDto.ProductDescription,
                     ProductName = productDto.ProductName

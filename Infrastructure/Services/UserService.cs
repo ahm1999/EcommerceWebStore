@@ -26,14 +26,40 @@ namespace Infrastructure.Services
             _context = context;
         }
 
-        public Task<ServiceResponse<AccountType>> GetAccountType()
+        public AccountType? GetAccountType()
         {
-            throw new NotImplementedException();
+
+            if (!IsLoggedIn())
+            {
+                return null;
+            }
+
+            string? role = _contextAccessor.HttpContext!.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+
+            switch (role) {
+                case RolesConsts.CLIENT:
+                    return AccountType.ClientAccount;
+                    
+                case RolesConsts.TRADER:
+                    return AccountType.TraderAccount;
+
+                default:
+                    return null;   
+
+            }
         }
 
         public Guid GetCurrnetUserId()
         {
-            throw new NotImplementedException();
+            string? retGuid =  _contextAccessor.HttpContext!.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value ;
+            if (retGuid is null) {
+                return Guid.Empty;
+            
+            }
+            Guid GuidValue = Guid.TryParse(retGuid, out GuidValue) ? GuidValue : Guid.Empty;
+            return GuidValue;
+
+
         }
 
         public Task<ServiceResponse<User>> GetUserByIdAsync(Guid UserId)
@@ -43,7 +69,12 @@ namespace Infrastructure.Services
 
         public bool IsLoggedIn()
         {
-            throw new NotImplementedException();
+            Claim? c = _contextAccessor.HttpContext!.User.Claims.FirstOrDefault();
+            if (c is null)
+            {
+                return false;
+            }
+            return true;
         }
 
         public async Task<ServiceResponse<User>> LogInAsync(LogInDTO logInDTO)
@@ -65,6 +96,12 @@ namespace Infrastructure.Services
             await SignInUser(user);
 
             return new ServiceResponse<User>(true, "Signed In Succesfully");
+        }
+
+        public async Task<ServiceResponse<User>> SignOutAsync()
+        {
+            await _contextAccessor.HttpContext!.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return new ServiceResponse<User>(true, "Signed Out Succesfully");
         }
 
         public async Task<ServiceResponse<User>> SignUpAsync(CreateUserDTO createUserDTO)
@@ -124,7 +161,7 @@ namespace Infrastructure.Services
 
             var authProperties = new AuthenticationProperties
             {
-                //AllowRefresh = <bool>,
+                AllowRefresh = true,
                 // Refreshing the authentication session should be allowed.
 
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),

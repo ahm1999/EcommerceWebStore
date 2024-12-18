@@ -9,7 +9,7 @@ namespace Domain.Entities
         public string? ProductDescription { get; set; }
 
         [ForeignKey(nameof(User))]
-        public Guid AddedBy { get; set; }
+        public Guid UserId { get; set; }
 
         public ICollection<ProductImage>? ProductImages { get; set; }
     }

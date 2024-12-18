@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿
+@using Application.ServiceInterfaces;
+@inject IUserService _userService
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,7 +31,20 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="AddProduct">Add Product</a>
                         </li>
+                        
+
                     </ul>
+                    @if (_userService.IsLoggedIn())
+                    {
+                        <form asp-controller="Auth" asp-action="LogOut">
+                            <button class="btn btn-warning" type="submit">Log Out</button>
+                        </form>
+                    }else{
+                        <div>
+                            <a class="btn btn-primary" asp-controller="Auth" asp-action="LogIn">Log In</a>
+                            <a class="btn btn-primary" asp-controller="Auth" asp-action="SignUp">Sign Up</a>
+                        </div>
+                    }
                 </div>
             </div>
         </nav>
